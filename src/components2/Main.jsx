@@ -1,55 +1,103 @@
-import humanLogo from "./../assets/humans-removebg-preview.png"
-
+import React, { useEffect, useState } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import humanLogo from "./../assets/humans-removebg-preview.png";
 import "./Main.css";
+
 const Main = () => {
+  useEffect(() => {
+    AOS.init({ duration: 1000 }); // Initialize AOS with a duration of 1000ms
+  }, []);
+  const [isOpen, setIsOpen] = useState(false);
 
-    return (
-        <div className="flex container flex-col p-0">
-            <div className="flex pt-2">
-                <div className="absolute left-6 ">
-                <h5 style={{ fontFamily: 'MuseoModerno'}} className="text-4xl font-semibold tracking-[8px]" >Ligovis</h5>
-                <h6 style={{ fontFamily: 'askara' }} className="text-sm "> TECHNICAL SOLUTIONS</h6>
-                </div>
-                <div className="absolute right-0 lg:right-10 inline text-base sm:text-xl">
-                    
-                    <button class=" text-orange-500 font-bold  py-2 px-2 md:px-3 lg:px-6 "> 
-                    <span class="underline-effect">Trainers</span></button>
-                    <button class=" text-orange-500 font-bold    py-2 md:px-3 lg:px-6  ">
-                    <span class="underline-effect">Blogs</span>  
-                    </button>
-                    <span className="text-orange-500 text-xl font-bold" >|</span>
-                    <button class=" text-orange-500 font-bold     py-2 md:px-3 lg:px-6 "><span class="underline-effect">Verify</span></button>
-                
-                </div>
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 relative mt-28 xs:flex-col">
+  const toggleNav = () => {
+    setIsOpen(!isOpen);
+  };
 
-                <div className="lg:ml-20 lg:mt-16 md:mt-20 flex-shrink-0">
-                    <p className="  md:text-left lg:text-left sm:text-center lg:text-4xl  text-3xl   font-[Noto sans sans font-serif] text-orange-600 tracking-wider">
-                       <span className="font-'Aldrich' ">Unveil</span>  Your potential
+  return (
+    <div className="flex flex-col m-4 mt-0">
+      <nav className="py-3">
+        <div className="flex justify-between items-center">
+          {/* Left Side */}
+          <div>
+            <h1
+              className="lg:text-5xl xs:text-3xl font-semibold"
+              style={{
+                fontFamily: "MuseoModerno",
+              }}
+            >
+              Ligovis
+            </h1>
+            <p
+              className="lg:text-xl xs:text-lg"
+              style={{ fontFamily: "askara" }}
+            >
+              Technical Solutions
+            </p>
+          </div>
 
-                    </p>
-                    <p className="lg:text-4xl text-3xl sm:text-center md:text-left lg:text-left font-[Noto sans sans font-serif] text-orange-600 tracking-wider mt-3">
-                        Take the first step in <b className="text-black">Learning! </b>
-                    </p>
-                    <div className="text-xl font-semibold text-center mt-8">
-                    <p >
-                            "Discover ligovis your personalised learning platform.
-                    </p>
-                    <p>
-                        Dive into beginner friendly courses and start you learning journey"
-                    </p>
-                    </div>
-                    </div>
-                   
-                <div className="lg:justify-self-end md:justify-self-end justify-self-center ">
-                    <img src={humanLogo} alt="img" width={400} />
-                </div>
+          {/* Hamburger Menu (Mobile) */}
+          <div className="lg:hidden">
+            <button onClick={toggleNav} className="">
+              {isOpen ? "✕" : "☰"}
+            </button>
+          </div>
 
-            </div>
-
-
+          {/* Right Side (Desktop) */}
+          <div className="hidden text-orange-500 lg:flex items-center">
+            <button className="ml-4 text-2xl font-bold">Trainers</button>
+            <button className=" ml-4 text-2xl font-bold">Blogs</button>
+            <button className=" ml-4 text-2xl font-bold">| Verify</button>
+          </div>
         </div>
-    )
-}
+
+        {/* Collapsed Menu (Mobile) */}
+        <div
+          className={`lg:hidden text-orange-500 font-bold ${
+            isOpen ? "block" : "hidden"
+          }`}
+        >
+          <button className="block  py-2 pt-4 w-full font-bold text-xl text-left">
+            Trainers
+          </button>
+          <button className="block  py-2  w-full font-bold text-xl text-left">
+            Blogs
+          </button>
+          <button className="block  py-2 w-full font-bold text-xl text-left">
+            Verify
+          </button>
+        </div>
+      </nav>
+      <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 relative lg:mt-12">
+        <div
+          className="lg:ml-20 lg:mt-16 md:mt-20 flex-shrink-0 text-content xs:order-2 order-1 "
+          data-aos="fade-right"
+        >
+          <p className="md:text-left lg:text-left sm:text-center lg:text-4xl text-3xl font-[Noto sans sans font-serif] text-orange-600 tracking-wider">
+            <span className="font-'Aldrich' ">Unveil</span> Your potential
+          </p>
+          <p className="lg:text-4xl text-3xl sm:text-center md:text-left lg:text-left font-[Noto sans sans font-serif] text-orange-600 tracking-wider mt-2 lg:mt-3">
+            Take the first step in <b className="text-black">Learning!</b>
+          </p>
+          <div className="text-xl font-semibold text-start mt-8">
+            <p className="pl-2">
+              "Discover Ligovis, your personalized learning platform.
+            </p>
+            <p className="lg:pl-4 pl-2">
+              Dive into beginner-friendly courses and start your learning
+              journey."
+            </p>
+          </div>
+        </div>
+        <div
+          className="lg:justify-self-end md:justify-self-end justify-self-center xs:order-1 order-2"
+          data-aos="fade-left"
+        >
+          <img src={humanLogo} alt="img" width={400} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default Main;
